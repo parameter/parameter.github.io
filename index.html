@@ -11,5 +11,29 @@
 </head>
 <body>
 	<h1>Parameter</h1>
+
+	<!-- keep first of all script-tags -->
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyA4UiQLQovAoFRArCbeB6W9rhYLmx6PgCo",
+	    authDomain: "parameter-caa52.firebaseapp.com",
+	    databaseURL: "https://parameter-caa52.firebaseio.com",
+	    projectId: "parameter-caa52",
+	    storageBucket: "parameter-caa52.appspot.com",
+	    messagingSenderId: "731455147933"
+	  };
+	  firebase.initializeApp(config);
+
+	  var requests = firebase.database().ref('requests');
+
+	  var newRequest = requests.push();
+	  newRequest.set({
+	  	message: 'Testing to save a message'
+	  });
+
+	  
+	</script>
 </body>
 </html>
