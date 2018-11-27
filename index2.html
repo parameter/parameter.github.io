@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Parameter</title>
+  <meta name="description" content="Home of Parameter">
+  <meta name="author" content="Parameter portfolio">
+
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css?v=1.0">
+</head>
+<body>
+	<main>
+
+		<header class="header">
+
+			<div class="hamburger hamburger--spin js-hamburger">
+        		<div class="hamburger-box">
+          			<div class="hamburger-inner"></div>
+        		</div>
+      		</div>
+
+		</header>
+
+		<section>
+
+			<div class="row">
+				<div class="whole">
+					<div class="inner">
+						<h1>Let us help you ...</h1>
+						<p>with javascript, wordpress, PHP, node</p>
+
+						<p>We have found that putting our heads together often has great results. 
+						When hiring us you get two dedicated developers.</p>
+
+						<canvas class="figure_eight"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</section>
+
+		<section>
+
+			<div class="row">
+				<div class="half">
+					<div class="inner person">
+						<img class="img" src="assets/gates.jpg" />
+						<h1>Gates</h1>
+						<p>Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin. Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd boksättare tog att antal bokstäver och blandade dem för att göra ett provexemplar av en bok. Lorem ipsum har inte bara överlevt fem århundraden, utan även övergången till elektronisk typografi utan större förändringar. Det blev allmänt känt på 1960-talet i samband med lanseringen av Letraset-ark med avsnitt av Lorem Ipsum, och senare med mjukvaror som Aldus PageMaker.</p>
+					</div>
+				</div>
+				<div class="half">
+					<div class="inner person">
+						<img class="img" src="assets/stallman.jpg" />
+						<h1>Gates</h1>
+						<p>Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin. Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd boksättare tog att antal bokstäver och blandade dem för att göra ett provexemplar av en bok. Lorem ipsum har inte bara överlevt fem århundraden, utan även övergången till elektronisk typografi utan större förändringar. Det blev allmänt känt på 1960-talet i samband med lanseringen av Letraset-ark med avsnitt av Lorem Ipsum, och senare med mjukvaror som Aldus PageMaker.</p>
+					</div>
+				</div>
+			</div>
+
+		</section>
+
+	</main>
+
+	<!-- keep first of all script-tags -->  
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+	<script src="js/scrollto.js"></script>
+
+	<script>
+
+// 
+
+// figure 8 
+(function() {
+
+	var header = document.querySelector('header');
+	var hamburger = document.querySelector('.hamburger');
+
+	hamburger.addEventListener('click', function() {
+		if (hamburger.classList.contains('is-active')) {
+			hamburger.classList.remove('is-active');
+		} else {
+			hamburger.classList.add('is-active');
+		}
+	});
+
+	window.onscroll = function() {
+		if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+		    header.classList.add('show');
+		} else {
+		    header.classList.remove('show');
+		}
+	};
+
+	// figure 8 
+	const container = document.querySelector('.row .whole')
+	console.log(container.offsetWidth);
+	const canvas = document.querySelector('.figure_eight')
+	const ctx = canvas.getContext('2d')
+
+	setDimensions()
+
+	window.addEventListener("resize", function () {
+	  setDimensions()
+	})
+
+	function setDimensions() {
+		canvas.width = container.clientWidth-40
+		canvas.height = 100
+	}
+
+	let time = 0
+	let tailLength = 333
+	let heightMod = 0
+	let widthMod = canvas.width*0.9
+	let growing = true
+
+	function drawFigure() {
+	  time += 0.008
+	  for (let i = 0; i < tailLength; i++) {
+	    drawDot(time + i / 60, 1, i * 1 / tailLength)
+	  }
+	}
+
+	function drawDot(time, radius, opacity) {
+	  const x = (canvas.width / 2 + ((widthMod / 2) * Math.cos(time)))
+	  const y = canvas.height / 2 + heightMod * Math.sin(time) * Math.cos(time)
+
+	  
+	  if (heightMod > 44) { growing = false } else if (heightMod < 1) { growing = true }
+	  
+	  if (growing === true) { 
+	    heightMod += .0005 
+	    widthMod += .0005 
+	  } else { 
+	    heightMod -= .0005 
+	    widthMod -= .0005 
+	  }
+	  
+	  ctx.fillStyle = 'rgb(0, 0, 0, ' + opacity + ')'
+	  ctx.beginPath();
+	  ctx.arc(x, y, radius, 0, 2 * Math.PI);
+	  ctx.fill(); 
+	}
+
+	function animationLoop() {
+	  window.requestAnimationFrame(animationLoop)
+	  ctx.clearRect(0, 0, canvas.width, canvas.height)
+	  drawFigure()
+	}
+	animationLoop()
+
+})();
+
+	</script>
+</body>
+</html>

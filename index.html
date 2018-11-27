@@ -2,18 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Parameter</title>
   <meta name="description" content="Home of Parameter">
   <meta name="author" content="Parameter portfolio">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css?v=1.0">
 </head>
 <body>
-	<h1>Parameter</h1>
+	<main>
+
+		<section>
+
+			<div class="row">
+				<h1>Parameter productions</h1>
+				<p>My name's Pär and I've been making stuff on the internet since 2010</p>
+			</div>
+
+			<div class="row">
+				<ul class="links">
+					<li><a class="anchor" href="#ask-me">Ask me something</a></li>
+					<li><a class="anchor" href="#my-stuff">Look at some stuff</a></li>
+				</ul>
+			</div>
+
+			<div class="row">
+				<h2>Keywords (unsorted)</h2>
+				<ul class="keywords">
+					<li><a href="#javascript">Javascript</a></li>
+					<li><a href="#react">React (preact?)</a></li>
+					<li><a href="#wordpress">Wordpress</a></li>
+					<li><a href="#php">PHP</a></li>
+					<li><a href="#laravel">Laravel</a></li>
+				</ul>
+			</div>
+
+		</section>
+
+		<section id="ask-me">
+			<div class="row">
+				<h1>How can I help you?</h1>
+				<p>Tell me about your project/problem/opportunity</p>
+			</div>
+			<div class="row lined_paper">
+				<form class="request">
+					<div class="textarea_holder">
+						<textarea name="request" placeholder="What time is it?"></textarea>
+					</div>
+					<div class="row align_right">
+						<button class="send" type="button" name="send">Send</button>
+					</div>
+				</form>
+			</div>
+
+		</section>
+
+		<section id="my-stuff">
+			<div class="row">
+				<h1>Portfolio</h1>
+			</div>
+		</section>
+
+	</main>
 
 	<!-- keep first of all script-tags -->
 	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+	<script src="js/scrollto.js"></script>
 	<script>
 	  // Initialize Firebase
 	  var config = {
@@ -28,12 +85,54 @@
 
 	  var requests = firebase.database().ref('requests');
 
+	  /*
 	  var newRequest = requests.push();
 	  newRequest.set({
 	  	message: 'Testing to save a message'
 	  });
+	  */
 
-	  
+	  var main = document.getElementsByTagName('main')[0];
+
+	 document.addEventListener('click', function (event) {
+
+		if (event.target.matches('.anchor')) {
+			event.preventDefault();
+
+			transitionToSection(event.target);
+
+			return false;
+		}
+
+	}, false);
+
+	var transitionToSection = function(target) {
+		main.classList.add('blurred');
+		var href = target.href;
+		var hash = href.substring(href.indexOf("#")+1);
+		var section = document.getElementById(hash);
+		
+		var sectionOffset = offset(section).top;
+
+		setTimeout( function() {
+			main.classList.remove('blurred');
+		},500);
+
+		scrollTo(sectionOffset, function() {
+			
+		}, 1300);
+		
+	}
+
+	// Methods 
+	function offset(el) {
+	    var rect = el.getBoundingClientRect(),
+	    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+	    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+	    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+	}
+
+
 	</script>
 </body>
 </html>
